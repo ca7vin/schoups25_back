@@ -17,5 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/glaces  ', 'App\Http\Controllers\GetGlaces');
 Route::get('/onepagecontent  ', 'App\Http\Controllers\GetOnePageContent');
