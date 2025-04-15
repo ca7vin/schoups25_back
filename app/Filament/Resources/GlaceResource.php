@@ -59,6 +59,7 @@ class GlaceResource extends Resource
                 Section::make('Informations générales')->schema([
                     TextInput::make('gout')->required()->label('Goût'),
                     FileUpload::make('image')
+                        ->label('Image (600 x 450)')
                         ->required(),
                     TagsInput::make('ingredients')->label('Ingrédients'),
                 ]),
