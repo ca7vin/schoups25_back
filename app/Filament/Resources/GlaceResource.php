@@ -23,7 +23,34 @@ class GlaceResource extends Resource
 {
     protected static ?string $model = Glace::class;
 
+    protected static ?string $recordTitleAttribute = 'gout';
+
+    protected static ?int $navigationSort = 999;
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getModelLabel(): string
+    {
+        return __('Glace');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Glaces');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Glaces');
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['gout'];
+    }
 
     public static function form(Form $form): Form
     {
