@@ -56,6 +56,7 @@ class PartnerResource extends Resource
                 Grid::make(1)->schema([
                     TextInput::make('nom')->required()->label('Nom'),
                     FileUpload::make('image')
+                        ->label('Image (600 x 450)')
                         ->required(),
                 ]),
             ]);
