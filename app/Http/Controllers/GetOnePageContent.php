@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Glace;
 use App\Models\Partner;
 use App\Settings\BannerSettings;
+use App\Settings\EmailSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class GetOnePageContent extends Controller
 {
-    public function __invoke(Request $request, BannerSettings $bannerSettings)
+    public function __invoke(Request $request, BannerSettings $bannerSettings, EmailSettings $emailContact)
     {
         $partners = Partner::orderBy('order_column')->get();
         $glaces = Glace::orderBy('order_column')->get();
@@ -43,6 +44,10 @@ class GetOnePageContent extends Controller
                     'nutrition' =>$glace->nutrition,
                 ];
             }),
+            'footer' => [
+                'facebook' => $emailContact->facebook,
+                'instagram' => $emailContact->instagram,
+            ],
         ];
     }
 }

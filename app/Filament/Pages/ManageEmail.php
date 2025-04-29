@@ -33,6 +33,14 @@ class ManageEmail extends SettingsPage
                     ->email()
                     ->label('Email de Contact')
                     ->maxLength(255),
+                    TextInput::make('facebook')
+                    ->required()
+                    ->label('Lien Facebook')
+                    ->maxLength(255),
+                    TextInput::make('instagram')
+                    ->required()
+                    ->label('Lien Instagram')
+                    ->maxLength(255),
                 ]),
             ]);
     }
