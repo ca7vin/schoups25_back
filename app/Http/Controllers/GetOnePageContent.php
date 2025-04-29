@@ -38,6 +38,7 @@ class GetOnePageContent extends Controller
                 $imageUrl = (Storage::disk('public')->url($glace->image));
                 return [
                     'id' => $glace->id,
+                    'categorie' => $glace->categorie,
                     'gout' => $glace->gout,
                     'image' => $imageUrl,
                     'ingredients' =>$glace->ingredients,

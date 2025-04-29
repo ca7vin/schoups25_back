@@ -10,11 +10,13 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -57,6 +59,13 @@ class GlaceResource extends Resource
         return $form
             ->schema([
                 Section::make('Informations générales')->schema([
+                    Select::make('categorie')
+                        ->label('Catégorie')
+                        ->required()
+                        ->options([
+                            'glace' => 'Glace',
+                            'sorbet' => 'Sorbet',
+                        ]),
                     TextInput::make('gout')->required()->label('Goût'),
                     FileUpload::make('image')
                         ->label('Image (600 x 600)')
@@ -88,6 +97,7 @@ class GlaceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('categorie'),
                 Tables\Columns\TextColumn::make('gout'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
@@ -95,7 +105,12 @@ class GlaceResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                //
+                SelectFilter::make('categorie')
+                    ->label('Catégorie')
+                    ->options([
+                        'glace' => 'Glace',
+                        'sorbet' => 'Sorbet',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

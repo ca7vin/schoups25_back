@@ -17,7 +17,7 @@ class Glace extends Model implements Sortable
         'sort_when_creating' => true,
     ];
 
-/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -27,6 +27,7 @@ class Glace extends Model implements Sortable
         'image',
         'ingredients',
         'nutrition',
+        'categorie'
     ];
 
     protected $casts = [
