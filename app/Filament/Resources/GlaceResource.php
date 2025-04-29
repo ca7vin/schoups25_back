@@ -61,7 +61,8 @@ class GlaceResource extends Resource
                     FileUpload::make('image')
                         ->label('Image (600 x 600)')
                         ->required(),
-                    TagsInput::make('ingredients')->label('Ingrédients'),
+                    TagsInput::make('ingredients')->label('Ingrédients')
+                        ->reorderable(),
                 ]),
 
                 Section::make('Valeurs nutritionnelles')->schema([
@@ -98,6 +99,7 @@ class GlaceResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

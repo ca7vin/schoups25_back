@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 
 return new class extends Migration
 {
@@ -20,6 +22,26 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        $now = now();
+
+        DB::table('users')->insert([
+            'name' => "Gisele",
+            'email' => "mostwanted1970@gmail.com",
+            'password' => password_hash('UnderGround@1970', PASSWORD_DEFAULT),
+            'email_verified_at' => $now,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('users')->insert([
+            'name' => "calvin",
+            'email' => "ca7vin@gmail.com",
+            'password' => password_hash('Mostwanted12_', PASSWORD_DEFAULT),
+            'email_verified_at' => $now,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
     }
 
     /**
