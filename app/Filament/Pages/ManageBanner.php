@@ -44,11 +44,12 @@ class ManageBanner extends SettingsPage
                         ->required()
                         ->maxLength(255),
                     TinyEditor::make('home_text')
+                        ->profile('simple')
                         ->label('Texte Hero')
                         ->required(),
                     FileUpload::make('home_image')
                         ->disk('public')
-                        ->label('Image Hero')
+                        ->label('Image Hero (1000 x 1000)')
                         ->visibility('public')
                         ->required(),
                 ])->collapsible()
@@ -60,10 +61,11 @@ class ManageBanner extends SettingsPage
                         ->required()
                         ->maxLength(255),
                     TinyEditor::make('about_text')
+                        ->profile('simple')
                         ->label('Texte A propos')
                         ->required(),
                     FileUpload::make('about_image')
-                        ->label('Image A propos')
+                        ->label('Image A propos (1000 x 1000)')
                         ->disk('public')
                         ->visibility('public')
                         ->required(),
