@@ -48,9 +48,9 @@ class ManageBanner extends SettingsPage
                         ->label('Texte Hero')
                         ->required(),
                     FileUpload::make('home_image')
-                        ->disk('public')
                         ->label('Image Hero (1000 x 1000)')
                         ->visibility('public')
+                        ->optimize('webp')
                         ->required(),
                 ])->collapsible()
                 ->columns(1),
@@ -66,8 +66,8 @@ class ManageBanner extends SettingsPage
                         ->required(),
                     FileUpload::make('about_image')
                         ->label('Image A propos (1000 x 1000)')
-                        ->disk('public')
                         ->visibility('public')
+                        ->optimize('webp')
                         ->required(),
                 ])->collapsible()
                 ->columns(1)
