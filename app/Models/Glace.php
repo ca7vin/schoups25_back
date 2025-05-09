@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+use Illuminate\Support\Facades\Storage;
 
 class Glace extends Model implements Sortable
 {
@@ -34,4 +37,20 @@ class Glace extends Model implements Sortable
         'ingredients' => 'array',
         'nutrition' => 'array'
     ];
+
+    public function generateQrCode()
+    {
+        $writer = new PngWriter();
+        $url = "https://schoupsfront2025-production.up.railway.app/#product-{$this->id}";
+        $qr = QrCode::create($url)
+            ->setSize(300)
+            ->setMargin(10);
+
+        $result = $writer->write($qr);
+
+        $path = "qrcodes/qrcode-{$this->gout}.png";
+        Storage::disk('public')->put($path, $result->getString());
+
+        return Storage::url($path);
+    }
 }

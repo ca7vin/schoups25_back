@@ -18,8 +18,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\View;
 
 class GlaceResource extends Resource
 {
@@ -58,6 +59,8 @@ class GlaceResource extends Resource
     {
         return $form
             ->schema([
+                View::make('qr-download')
+                    ->visible(fn($record) => filled($record)),
                 Section::make('Informations générales')->schema([
                     Select::make('categorie')
                         ->label('Catégorie')
@@ -115,6 +118,11 @@ class GlaceResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('qr')
+                    ->label('QR Code')
+                    ->icon('heroicon-m-arrow-down-tray') // icône de téléchargement
+                    ->url(fn($record) => route('download.qr', ['glace' => $record->id])) // Lien vers la route de téléchargement
+                    ->color('primary')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

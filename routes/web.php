@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/admin');
 });
+Route::get('/download-qr/{glace}', [QrCodeController::class, 'download'])->name('download.qr');
