@@ -41,7 +41,7 @@ class Glace extends Model implements Sortable
 
     public function generateQrCode()
     {
-        $filePath = 'qrcodes/product-' . $this->gout . '.png';
+        $filePath = 'qrcodes/qrcode-' . $this->gout . '.png';
         $fullPath = storage_path('app/public/' . $filePath);
 
         if (!file_exists($fullPath)) {
