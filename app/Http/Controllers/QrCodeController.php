@@ -11,20 +11,23 @@ class QrCodeController extends Controller
 {
     public function download(Glace $glace)
     {
-        // Générer le QR code et obtenir le chemin de stockage
+        // Force la génération du QR code s'il n'existe pas
         $filePath = 'qrcodes/product-' . $glace->id . '.png';
+        $fullStoragePath = storage_path('app/public/' . $filePath);
 
-        // Vérifie si le fichier existe dans le stockage public
-        if (Storage::exists('public/' . $filePath)) {
-            $fileContents = Storage::get('public/' . $filePath);
-
-            return response($fileContents, 200)
-                ->header('Content-Type', 'image/png')
-                ->header('Content-Disposition', 'attachment; filename="qrcode-' . $glace->gout . '.png"');
+        // Crée le QR code si le fichier n'existe pas
+        if (!file_exists($fullStoragePath)) {
+            $glace->generateQrCode(); // cette méthode doit créer le fichier
         }
 
-        // Si le fichier n'existe pas
+        // Vérifie à nouveau après tentative de génération
+        if (file_exists($fullStoragePath)) {
+            return response()->download($fullStoragePath, 'qrcode-' . $glace->gout . '.png', [
+                'Content-Type' => 'image/png',
+            ]);
+        }
+
+        // Si toujours rien
         return response()->json(['error' => 'QR code non trouvé.'], 404);
     }
 }
-

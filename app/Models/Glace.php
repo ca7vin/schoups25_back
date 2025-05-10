@@ -40,17 +40,14 @@ class Glace extends Model implements Sortable
 
     public function generateQrCode()
     {
-        $writer = new PngWriter();
-        $url = "https://schoupsfront2025-production.up.railway.app/#product-{$this->id}";
-        $qr = QrCode::create($url)
-            ->setSize(300)
-            ->setMargin(10);
+        $filePath = 'qrcodes/product-' . $this->id . '.png';
+        $fullPath = storage_path('app/public/' . $filePath);
 
-        $result = $writer->write($qr);
+        if (!file_exists($fullPath)) {
+            $qrCode = new \Endroid\QrCode\QrCode(url('/#product-' . $this->id));
+            $qrCode->writeFile($fullPath);
+        }
 
-        $path = "qrcodes/qrcode-{$this->gout}.png";
-        Storage::disk('public')->put($path, $result->getString());
-
-        return Storage::url($path);
+        return Storage::url($filePath);
     }
 }
