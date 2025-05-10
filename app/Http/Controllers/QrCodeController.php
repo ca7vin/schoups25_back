@@ -12,7 +12,7 @@ class QrCodeController extends Controller
     public function download(Glace $glace)
     {
         // Force la génération du QR code s'il n'existe pas
-        $filePath = 'qrcodes/product-' . $glace->id . '.png';
+        $filePath = 'qrcodes/product-' . $glace->gout . '.png';
         $fullStoragePath = storage_path('app/public/' . $filePath);
 
         // Crée le QR code si le fichier n'existe pas
