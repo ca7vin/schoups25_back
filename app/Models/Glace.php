@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Endroid\QrCode\Builder\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
@@ -44,8 +45,17 @@ class Glace extends Model implements Sortable
         $fullPath = storage_path('app/public/' . $filePath);
 
         if (!file_exists($fullPath)) {
-            $qrCode = new \Endroid\QrCode\QrCode(url('/#product-' . $this->id));
-            $qrCode->writeFile($fullPath);
+            $url = url('/#product-' . $this->id);
+
+            $result = Builder::create()
+                ->writer(new PngWriter())
+                ->data($url)
+                ->size(300)
+                ->margin(10)
+                ->build();
+
+            // Enregistre le fichier PNG dans le disque public
+            file_put_contents($fullPath, $result->getString());
         }
 
         return Storage::url($filePath);
