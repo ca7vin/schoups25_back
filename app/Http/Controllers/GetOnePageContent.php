@@ -6,17 +6,22 @@ use App\Models\Glace;
 use App\Models\Partner;
 use App\Settings\BannerSettings;
 use App\Settings\EmailSettings;
+use App\Settings\MarqueeSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class GetOnePageContent extends Controller
 {
-    public function __invoke(Request $request, BannerSettings $bannerSettings, EmailSettings $emailContact)
+    public function __invoke(Request $request, BannerSettings $bannerSettings, EmailSettings $emailContact, MarqueeSettings $marquee)
     {
         $partners = Partner::orderBy('order_column')->get();
         $glaces = Glace::orderBy('order_column')->get();
 
         return [
+            'marquee' => [
+                'text' => $marquee->text,
+                'active' => $marquee->active ? true:false,
+            ],
             'banner_hero' => [
                 'title' => $bannerSettings->home_title,
                 'text' => $bannerSettings->home_text,
@@ -41,8 +46,8 @@ class GetOnePageContent extends Controller
                     'categorie' => $glace->categorie,
                     'gout' => $glace->gout,
                     'image' => $imageUrl,
-                    'ingredients' =>$glace->ingredients,
-                    'nutrition' =>$glace->nutrition,
+                    'ingredients' => $glace->ingredients,
+                    'nutrition' => $glace->nutrition,
                 ];
             }),
             'footer' => [
